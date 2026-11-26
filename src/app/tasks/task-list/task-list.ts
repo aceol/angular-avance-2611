@@ -1,10 +1,11 @@
-import { Component, inject, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, OnInit, signal } from '@angular/core';
 
 import { TasksStateService } from '../tasks.state.service';
+import { TaskForm } from '../task-form/task-form';
 
 @Component({
   selector: 'app-task-list',
-  imports: [],
+  imports: [TaskForm],
   templateUrl: './task-list.html',
   styleUrl: './task-list.scss',
 })
@@ -18,5 +19,12 @@ export class TaskList implements OnInit {
 
   ngOnInit() {
     this.#tasksState.fetchAll();
+  }
+
+  // Signal pour gérer la visibilité du formulaire
+  protected readonly isFormVisible = signal(false);
+
+  protected closeForm(): void {
+    this.isFormVisible.set(false);
   }
 }
