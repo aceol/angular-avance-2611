@@ -2,10 +2,11 @@ import { Component, inject, ChangeDetectionStrategy, OnInit, signal } from '@ang
 
 import { TasksStateService } from '../tasks.state.service';
 import { TaskForm } from '../task-form/task-form';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-task-list',
-  imports: [TaskForm],
+  imports: [TaskForm, RouterLink],
   templateUrl: './task-list.html',
   styleUrl: './task-list.scss',
 })

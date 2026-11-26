@@ -6,6 +6,7 @@ import { tapResponse } from '@ngrx/operators';
 import { withDevtools, withStorageSync } from '@ngrx-toolkit/core';
 
 import { AuthApiService, User } from './auth-api.service';
+import { Router } from '@angular/router';
 export interface AuthState {
   user: User | null;
   isLoading: boolean;
@@ -26,7 +27,7 @@ export const AuthStore = signalStore(
     isLoggedIn: computed(() => user() !== null),
     displayName: computed(() => user()?.firstName ?? 'Invité'),
   })),
-  withMethods((store, authApi = inject(AuthApiService)) => ({
+  withMethods((store, authApi = inject(AuthApiService), router = inject(Router)) => ({
     // On définit un "effet" déclenché par l'appel de la méthode login
     login: rxMethod<{ email: string; password: string }>(
       pipe(
@@ -34,7 +35,10 @@ export const AuthStore = signalStore(
         switchMap(({ email, password }) =>
           authApi.login(email, password).pipe(
             tapResponse({
-              next: ({ user }: { user: User }) => patchState(store, { user, isLoading: false }),
+              next: ({ user }: { user: User }) => {
+                patchState(store, { user, isLoading: false });
+                router.navigate(['/dashboard']);
+              },
               error: (err: Error) => patchState(store, { error: err.message, isLoading: false }),
             }),
           ),
@@ -43,6 +47,7 @@ export const AuthStore = signalStore(
     ),
     logout(): void {
       patchState(store, initialState);
+      router.navigate(['/login']);
     },
   })),
 );
