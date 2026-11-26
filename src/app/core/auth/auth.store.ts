@@ -3,6 +3,8 @@ import { pipe, switchMap, tap } from 'rxjs';
 import { signalStore, withState, withComputed, withMethods, patchState } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
+import { withDevtools, withStorageSync } from '@ngrx-toolkit/core';
+
 import { AuthApiService, User } from './auth-api.service';
 export interface AuthState {
   user: User | null;
@@ -18,6 +20,8 @@ const initialState: AuthState = {
 export const AuthStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
+  withDevtools('phoenix-auth'),
+  withStorageSync('phoenix-auth'),
   withComputed(({ user }) => ({
     isLoggedIn: computed(() => user() !== null),
     displayName: computed(() => user()?.firstName ?? 'Invité'),
