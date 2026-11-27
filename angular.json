@@ -13,6 +13,12 @@
           "style": "scss"
         }
       },
+      "i18n": {
+        "sourceLocale": "fr",
+        "locales": {
+          "en": "messages.en.xlf"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -29,11 +35,13 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ]
+            "styles": ["src/styles.scss"],
+            "polyfills": ["@angular/localize/init"]
           },
           "configurations": {
+            "en": {
+              "localize": ["en"]
+            },
             "production": {
               "budgets": [
                 {
@@ -60,6 +68,9 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
+            "en": {
+              "buildTarget": "phoenix-app:build:development,en"
+            },
             "production": {
               "buildTarget": "phoenix-app:build:production"
             },

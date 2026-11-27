@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:en": "ng build --configuration=en",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -26,6 +27,7 @@
     "@angular/build": "^22.2.2",
     "@angular/cli": "^22.2.2",
     "@angular/compiler-cli": "^22.2.0",
+    "@angular/localize": "^22.3.0",
     "@ngrx-toolkit/core": "^22.0.1",
     "jsdom": "^30.0.0",
     "prettier": "^3.8.1",
